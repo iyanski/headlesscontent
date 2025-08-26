@@ -1,5 +1,10 @@
 # Headless Content Management System
 
+[![npm version](https://img.shields.io/npm/v/headlesscontent.svg)](https://www.npmjs.com/package/headlesscontent)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/your-username/headlesscontent/ci.yml?branch=main)](https://github.com/your-username/headlesscontent/actions)
+[![Dependency Status](https://img.shields.io/david/your-username/headlesscontent.svg)](https://david-dm.org/your-username/headlesscontent)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A modern, API-first headless content management system built with NestJS, TypeScript, and Prisma.
 
 ## 🚀 Features

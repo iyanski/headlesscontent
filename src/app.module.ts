@@ -11,6 +11,7 @@ import { MediaModule } from './media/media.module';
 import { CategoriesModule } from './categories/categories.module';
 import { TagsModule } from './tags/tags.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { PublicModule } from './public/public.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     CategoriesModule,
     TagsModule,
     OrganizationsModule,
+    PublicModule,
   ],
   providers: [
     {

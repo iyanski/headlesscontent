@@ -20,6 +20,7 @@ const media_module_1 = require("./media/media.module");
 const categories_module_1 = require("./categories/categories.module");
 const tags_module_1 = require("./tags/tags.module");
 const organizations_module_1 = require("./organizations/organizations.module");
+const public_module_1 = require("./public/public.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -38,6 +39,7 @@ exports.AppModule = AppModule = __decorate([
             categories_module_1.CategoriesModule,
             tags_module_1.TagsModule,
             organizations_module_1.OrganizationsModule,
+            public_module_1.PublicModule,
         ],
         providers: [
             {

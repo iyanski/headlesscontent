@@ -16,16 +16,7 @@ import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagContentQueryDto } from './dto/tag-content-query.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserRole } from '@prisma/client';
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
-}
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 @ApiTags('Tags')
 @ApiBearerAuth()

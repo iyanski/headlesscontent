@@ -16,16 +16,7 @@ import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { ContentQueryDto } from './dto/content-query.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserRole } from '@prisma/client';
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
-}
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 @ApiTags('Content')
 @ApiBearerAuth()

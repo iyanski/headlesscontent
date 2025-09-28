@@ -14,16 +14,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserRole } from '@prisma/client';
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
-}
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 @ApiTags('Users')
 @ApiBearerAuth()

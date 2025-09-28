@@ -14,16 +14,7 @@ import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
-import { UserRole } from '@prisma/client';
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
-}
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 @ApiTags('Organizations')
 @Controller('organizations')

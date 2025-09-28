@@ -7,15 +7,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoryContentQueryDto } from './dto/category-content-query.dto';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UserRole } from '@prisma/client';
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
-}
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;

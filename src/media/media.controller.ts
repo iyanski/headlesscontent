@@ -21,22 +21,13 @@ import { MediaService } from './media.service';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { MediaQueryDto } from './dto/media-query.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { UserRole } from '@prisma/client';
+import type { RequestWithUser } from '../common/types/request-with-user.interface';
 
 interface UploadedFile {
   originalname: string;
   buffer: Buffer;
   mimetype: string;
   size: number;
-}
-
-interface RequestWithUser {
-  user: {
-    id: string;
-    email: string;
-    role: UserRole;
-    organizationId: string;
-  };
 }
 
 @ApiTags('Media')

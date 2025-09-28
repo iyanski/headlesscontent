@@ -1,14 +1,24 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class UpdateMediaDto {
-  @ApiProperty({ example: 'A beautiful sunset', required: false })
+  @ApiPropertyOptional({
+    example: 'A beautiful sunset',
+    description: 'Alternative text for the media',
+    maxLength: 255,
+  })
   @IsOptional()
   @IsString()
+  @MaxLength(255)
   alt?: string;
 
-  @ApiProperty({ example: 'Sunset over the mountains', required: false })
+  @ApiPropertyOptional({
+    example: 'Sunset over the mountains',
+    description: 'Caption for the media',
+    maxLength: 500,
+  })
   @IsOptional()
   @IsString()
+  @MaxLength(500)
   caption?: string;
 }

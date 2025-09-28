@@ -478,8 +478,12 @@ export class ContentService {
     });
 
     // Prepare update data
+    const { categoryIds, tagIds, ...updateContentDtoWithoutIds } =
+      updateContentDto;
+    void categoryIds;
+    void tagIds;
     const updateData: ContentUpdateData = {
-      ...updateContentDto,
+      ...updateContentDtoWithoutIds,
       updatedBy: userId,
     };
 

@@ -356,7 +356,6 @@ describe('UsersService', () => {
         where: { id: 'user-1' },
         data: {
           ...updateDto,
-          password: 'hashedPassword',
         },
         select: {
           id: true,
@@ -456,7 +455,6 @@ describe('UsersService', () => {
         where: { id: 'user-1' },
         data: {
           ...updateDto,
-          password: 'hashedPassword',
         },
         select: expect.any(Object),
       });

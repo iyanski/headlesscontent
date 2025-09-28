@@ -14,7 +14,6 @@ import {
 } from '@nestjs/swagger';
 import { PublicService } from './public.service';
 import { PublicContentQueryDto } from './dto/public-content-query.dto';
-import { ContentStatus } from '@prisma/client';
 
 @ApiTags('Public')
 @Controller('public')
@@ -34,10 +33,10 @@ export class PublicController {
     required: false,
     description: 'Filter by category ID',
   })
-  @ApiQuery({ 
-    name: 'tagId', 
-    required: false, 
-    description: 'Filter by tag ID' 
+  @ApiQuery({
+    name: 'tagId',
+    required: false,
+    description: 'Filter by tag ID',
   })
   @ApiQuery({
     name: 'limit',

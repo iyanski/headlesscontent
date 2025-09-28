@@ -21,17 +21,17 @@ export declare class CategoriesService {
             content: number;
         };
     } & {
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     findAll(): Promise<({
         creator: {
@@ -50,17 +50,17 @@ export declare class CategoriesService {
             content: number;
         };
     } & {
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     })[]>;
     findOne(id: string): Promise<{
         creator: {
@@ -79,17 +79,17 @@ export declare class CategoriesService {
             content: number;
         };
     } & {
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     findBySlug(slug: string, organizationId: string): Promise<{
         creator: {
@@ -108,17 +108,17 @@ export declare class CategoriesService {
             content: number;
         };
     } & {
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     update(id: string, updateCategoryDto: UpdateCategoryDto, userId: string): Promise<{
         creator: {
@@ -134,47 +134,47 @@ export declare class CategoriesService {
             lastName: string | null;
         };
     } & {
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     remove(id: string): Promise<{
-        id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
+        id: string;
         isActive: boolean;
+        organizationId: string;
         createdAt: Date;
         updatedAt: Date;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     getContentByCategory(categoryId: string, query?: {
         limit?: number;
         offset?: number;
     }): Promise<{
         category: {
-            id: string;
             name: string;
             slug: string;
             description: string | null;
+            color: string | null;
+            id: string;
             isActive: boolean;
+            organizationId: string;
             createdAt: Date;
             updatedAt: Date;
             createdBy: string;
             updatedBy: string;
-            organizationId: string;
-            color: string | null;
         };
         content: ({
             creator: {
@@ -183,12 +183,17 @@ export declare class CategoriesService {
                 firstName: string | null;
                 lastName: string | null;
             };
+            contentType: {
+                name: string;
+                slug: string;
+                id: string;
+            };
             categories: ({
                 category: {
-                    id: string;
                     name: string;
                     slug: string;
                     color: string | null;
+                    id: string;
                 };
             } & {
                 id: string;
@@ -198,32 +203,27 @@ export declare class CategoriesService {
             })[];
             tags: ({
                 tag: {
-                    id: string;
                     name: string;
                     slug: string;
                     color: string | null;
+                    id: string;
                 };
             } & {
                 id: string;
                 createdAt: Date;
-                tagId: string;
                 contentId: string;
+                tagId: string;
             })[];
-            contentType: {
-                id: string;
-                name: string;
-                slug: string;
-            };
         } & {
-            id: string;
             slug: string;
+            title: string;
+            id: string;
+            organizationId: string;
             createdAt: Date;
             updatedAt: Date;
-            content: import("@prisma/client/runtime/library").JsonValue;
             createdBy: string;
             updatedBy: string;
-            organizationId: string;
-            title: string;
+            content: import("@prisma/client/runtime/library").JsonValue;
             status: import("@prisma/client").$Enums.ContentStatus;
             publishedAt: Date | null;
             contentTypeId: string;

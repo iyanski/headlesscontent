@@ -20,25 +20,46 @@ class CreateCategoryDto {
 }
 exports.CreateCategoryDto = CreateCategoryDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'Technology' }),
+    (0, swagger_1.ApiProperty)({
+        example: 'Technology',
+        description: 'The name of the category',
+        minLength: 1,
+        maxLength: 100,
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "name", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'technology' }),
+    (0, swagger_1.ApiProperty)({
+        example: 'technology',
+        description: 'URL-friendly slug for the category',
+        minLength: 1,
+        maxLength: 100,
+        pattern: '^[a-z0-9-]+$',
+    }),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "slug", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'Technology related content', required: false }),
+    (0, swagger_1.ApiProperty)({
+        example: 'Technology related content',
+        description: 'Optional description of the category',
+        required: false,
+        maxLength: 500,
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateCategoryDto.prototype, "description", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '#3B82F6', required: false }),
+    (0, swagger_1.ApiProperty)({
+        example: '#3B82F6',
+        description: 'Optional hex color code for the category',
+        required: false,
+        pattern: '^#[0-9A-Fa-f]{6}$',
+    }),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsHexColor)(),
     __metadata("design:type", String)

@@ -1,6 +1,7 @@
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CategoryContentQueryDto } from './dto/category-content-query.dto';
 import { UserRole } from '@prisma/client';
 interface RequestWithUser {
     user: {
@@ -34,13 +35,13 @@ export declare class CategoriesController {
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     findAll(): Promise<({
         creator: {
@@ -63,13 +64,13 @@ export declare class CategoriesController {
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     })[]>;
     findOne(id: string): Promise<{
         creator: {
@@ -92,13 +93,13 @@ export declare class CategoriesController {
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     findBySlug(slug: string, req: RequestWithUser): Promise<{
         creator: {
@@ -121,30 +122,27 @@ export declare class CategoriesController {
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
-    getContentByCategory(id: string, query: {
-        limit?: number;
-        offset?: number;
-    }): Promise<{
+    getContentByCategory(id: string, query: CategoryContentQueryDto): Promise<{
         category: {
             id: string;
             name: string;
             slug: string;
             description: string | null;
+            color: string | null;
             isActive: boolean;
             createdAt: Date;
             updatedAt: Date;
+            organizationId: string;
             createdBy: string;
             updatedBy: string;
-            organizationId: string;
-            color: string | null;
         };
         content: ({
             creator: {
@@ -152,6 +150,11 @@ export declare class CategoriesController {
                 username: string;
                 firstName: string | null;
                 lastName: string | null;
+            };
+            contentType: {
+                id: string;
+                name: string;
+                slug: string;
             };
             categories: ({
                 category: {
@@ -176,23 +179,18 @@ export declare class CategoriesController {
             } & {
                 id: string;
                 createdAt: Date;
-                tagId: string;
                 contentId: string;
+                tagId: string;
             })[];
-            contentType: {
-                id: string;
-                name: string;
-                slug: string;
-            };
         } & {
             id: string;
             slug: string;
             createdAt: Date;
             updatedAt: Date;
             content: import("@prisma/client/runtime/library").JsonValue;
+            organizationId: string;
             createdBy: string;
             updatedBy: string;
-            organizationId: string;
             title: string;
             status: import("@prisma/client").$Enums.ContentStatus;
             publishedAt: Date | null;
@@ -220,26 +218,26 @@ export declare class CategoriesController {
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
     remove(id: string): Promise<{
         id: string;
         name: string;
         slug: string;
         description: string | null;
+        color: string | null;
         isActive: boolean;
         createdAt: Date;
         updatedAt: Date;
+        organizationId: string;
         createdBy: string;
         updatedBy: string;
-        organizationId: string;
-        color: string | null;
     }>;
 }
 export {};

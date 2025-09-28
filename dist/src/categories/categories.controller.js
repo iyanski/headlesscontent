@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const categories_service_1 = require("./categories.service");
 const create_category_dto_1 = require("./dto/create-category.dto");
 const update_category_dto_1 = require("./dto/update-category.dto");
+const category_content_query_dto_1 = require("./dto/category-content-query.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let CategoriesController = class CategoriesController {
     categoriesService;
@@ -49,9 +50,6 @@ let CategoriesController = class CategoriesController {
 exports.CategoriesController = CategoriesController;
 __decorate([
     (0, common_1.Post)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Create a new category' }),
-    (0, swagger_1.ApiResponse)({ status: 201, description: 'Category created successfully' }),
-    (0, swagger_1.ApiResponse)({ status: 409, description: 'Category already exists' }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -60,17 +58,12 @@ __decorate([
 ], CategoriesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
-    (0, swagger_1.ApiOperation)({ summary: 'Get all categories' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'List of categories' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], CategoriesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Get category by ID' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Category found' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Category not found' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -78,9 +71,6 @@ __decorate([
 ], CategoriesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Get)('slug/:slug'),
-    (0, swagger_1.ApiOperation)({ summary: 'Get category by slug' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Category found' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Category not found' }),
     __param(0, (0, common_1.Param)('slug')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -89,30 +79,14 @@ __decorate([
 ], CategoriesController.prototype, "findBySlug", null);
 __decorate([
     (0, common_1.Get)(':id/content'),
-    (0, swagger_1.ApiOperation)({ summary: 'Get content by category' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Content found' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Category not found' }),
-    (0, swagger_1.ApiQuery)({
-        name: 'limit',
-        required: false,
-        description: 'Number of items per page',
-    }),
-    (0, swagger_1.ApiQuery)({
-        name: 'offset',
-        required: false,
-        description: 'Number of items to skip',
-    }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String, category_content_query_dto_1.CategoryContentQueryDto]),
     __metadata("design:returntype", void 0)
 ], CategoriesController.prototype, "getContentByCategory", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Update category' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Category updated successfully' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Category not found' }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
@@ -122,9 +96,6 @@ __decorate([
 ], CategoriesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Delete category' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Category deleted successfully' }),
-    (0, swagger_1.ApiResponse)({ status: 404, description: 'Category not found' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

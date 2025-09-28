@@ -189,19 +189,27 @@ describe('ContentService', () => {
             },
           },
           categories: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
           tags: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              tag: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
         },
@@ -296,19 +304,27 @@ describe('ContentService', () => {
             },
           },
           categories: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
           tags: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              tag: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
         },
@@ -471,19 +487,27 @@ describe('ContentService', () => {
             },
           },
           categories: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
           tags: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              tag: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
         },
@@ -545,19 +569,27 @@ describe('ContentService', () => {
             },
           },
           categories: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
           tags: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              color: true,
+            include: {
+              tag: {
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  color: true,
+                },
+              },
             },
           },
         },
@@ -631,7 +663,62 @@ describe('ContentService', () => {
             create: [{ tagId: 'tag-2' }],
           },
         },
-        include: expect.any(Object),
+        include: {
+          categories: {
+            include: {
+              category: {
+                select: {
+                  color: true,
+                  id: true,
+                  name: true,
+                  slug: true,
+                },
+              },
+            },
+          },
+          contentType: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+          creator: {
+            select: {
+              firstName: true,
+              id: true,
+              lastName: true,
+              username: true,
+            },
+          },
+          organization: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
+          tags: {
+            include: {
+              tag: {
+                select: {
+                  color: true,
+                  id: true,
+                  name: true,
+                  slug: true,
+                },
+              },
+            },
+          },
+          updater: {
+            select: {
+              firstName: true,
+              id: true,
+              lastName: true,
+              username: true,
+            },
+          },
+        },
       });
       expect(result).toEqual({ ...mockContent, ...updateDto });
     });
@@ -645,11 +732,15 @@ describe('ContentService', () => {
     });
 
     it('should throw ConflictException if slug already exists in organization', async () => {
+      const updateDtoWithSlug = {
+        ...updateDto,
+        slug: 'existing-slug',
+      };
       mockPrismaService.content.findUnique.mockResolvedValue(mockContent);
       mockPrismaService.content.findFirst.mockResolvedValue(mockContent);
 
       await expect(
-        service.update('content-1', updateDto, 'user-1', 'org-1'),
+        service.update('content-1', updateDtoWithSlug, 'user-1', 'org-1'),
       ).rejects.toThrow(ConflictException);
     });
 

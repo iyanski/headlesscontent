@@ -41,7 +41,22 @@ export class PublicService {
     }
 
     // Build where clause
-    const where: any = {
+    const where: {
+      organizationId: string;
+      status: ContentStatus;
+      publishedAt: { not: null };
+      contentTypeId?: string;
+      categories?: {
+        some: {
+          categoryId: string;
+        };
+      };
+      tags?: {
+        some: {
+          tagId: string;
+        };
+      };
+    } = {
       organizationId: organization.id,
       status: ContentStatus.PUBLISHED,
       publishedAt: { not: null },

@@ -2,6 +2,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ContentService } from './content.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { QueryOptimizationService } from '../common/services/query-optimization.service';
+import { QueryCacheService } from '../common/services/query-cache.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { ContentStatus } from '@prisma/client';
@@ -31,6 +33,19 @@ describe('ContentService', () => {
       deleteMany: jest.fn(),
       create: jest.fn(),
     },
+  };
+
+  const mockQueryOptimizationService = {
+    getOptimizedContentList: jest.fn(),
+    getContentListMinimal: jest.fn(),
+    getContentWithRelations: jest.fn(),
+  };
+
+  const mockQueryCacheService = {
+    getCachedContentList: jest.fn(),
+    invalidateContentCache: jest.fn(),
+    clearAllCaches: jest.fn(),
+    getStats: jest.fn(),
   };
 
   const mockContent = {
@@ -96,6 +111,14 @@ describe('ContentService', () => {
         {
           provide: PrismaService,
           useValue: mockPrismaService,
+        },
+        {
+          provide: QueryOptimizationService,
+          useValue: mockQueryOptimizationService,
+        },
+        {
+          provide: QueryCacheService,
+          useValue: mockQueryCacheService,
         },
       ],
     }).compile();

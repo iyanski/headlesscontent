@@ -1,6 +1,12 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateMediaDto } from './dto/update-media.dto';
+import { FileValidationService } from '../common/services/file-validation.service';
+import { FileSecurityService } from '../common/services/file-security.service';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -13,9 +19,54 @@ export interface UploadedFile {
 
 @Injectable()
 export class MediaService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private fileValidationService: FileValidationService,
+    private fileSecurityService: FileSecurityService,
+  ) {}
 
   async create(file: UploadedFile, userId: string, organizationId: string) {
+    // 1. Validate file
+    const validationResult =
+      await this.fileValidationService.validateFile(file);
+    if (!validationResult.isValid) {
+      throw new BadRequestException(
+        `File validation failed: ${validationResult.errors.join(', ')}`,
+      );
+    }
+
+    // 2. Perform security scan
+    const securityResult =
+      await this.fileSecurityService.performSecurityScan(file);
+    if (!securityResult.isSafe) {
+      throw new BadRequestException(
+        `File security scan failed: ${securityResult.threats.join(', ')}`,
+      );
+    }
+
+    // 3. Check if file is quarantined
+    const fileHash = this.fileSecurityService.generateFileHash(file.buffer);
+    const isQuarantined = await this.fileSecurityService.isFileQuarantined();
+    if (isQuarantined) {
+      throw new BadRequestException(
+        'File is quarantined and cannot be uploaded',
+      );
+    }
+
+    // 4. Quarantine file if high risk
+    if (
+      securityResult.riskLevel === 'high' ||
+      securityResult.riskLevel === 'critical'
+    ) {
+      await this.fileSecurityService.quarantineFile(
+        fileHash,
+        securityResult.threats.join(', '),
+      );
+      throw new BadRequestException(
+        'File has been quarantined due to security concerns',
+      );
+    }
+
     const uploadPath = process.env.UPLOAD_PATH || './uploads';
     const fileName = `${Date.now()}-${file.originalname}`;
     const filePath = path.join(uploadPath, fileName);

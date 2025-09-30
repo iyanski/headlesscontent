@@ -71,4 +71,56 @@ export class ContentController {
   remove(@Param('id') id: string, @Request() req: RequestWithUser) {
     return this.contentService.remove(id, req.user.organizationId);
   }
+
+  // Optimized query endpoints for large datasets
+
+  @Get('optimized')
+  findAllOptimized(
+    @Query() query: ContentQueryDto,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.contentService.findAllOptimized(
+      req.user.organizationId,
+      query,
+      query.limit,
+      query.offset,
+    );
+  }
+
+  @Get('cached')
+  findAllCached(
+    @Query() query: ContentQueryDto,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.contentService.findAllCached(
+      req.user.organizationId,
+      query,
+      query.limit,
+      query.offset,
+    );
+  }
+
+  @Get('minimal')
+  findAllMinimal(
+    @Query() query: ContentQueryDto,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.contentService.findAllMinimal(
+      req.user.organizationId,
+      query,
+      query.limit,
+      query.offset,
+    );
+  }
+
+  @Get(':id/relations')
+  findOneWithRelations(
+    @Param('id') id: string,
+    @Request() req: RequestWithUser,
+  ) {
+    return this.contentService.findOneWithRelations(
+      id,
+      req.user.organizationId,
+    );
+  }
 }

@@ -27,7 +27,10 @@ export class PasswordComplexityConstraint
       lastName: obj.lastName as string,
     };
 
-    const result = this.validator.validateForUserCreation(password, userInfo);
+    const result = this.validator.validateForUserCreation(
+      password as string,
+      userInfo,
+    );
     return result.isValid;
   }
 
@@ -45,7 +48,10 @@ export class PasswordComplexityConstraint
       lastName: obj.lastName as string,
     };
 
-    const result = this.validator.validateForUserCreation(password, userInfo);
+    const result = this.validator.validateForUserCreation(
+      password as string,
+      userInfo,
+    );
 
     if (result.errors.length > 0) {
       return result.errors.join(', ');

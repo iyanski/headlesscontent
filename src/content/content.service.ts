@@ -7,6 +7,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { ContentStatus } from '@prisma/client';
+import { QueryOptimizationService } from '../common/services/query-optimization.service';
+import { QueryCacheService } from '../common/services/query-cache.service';
 
 interface ContentQuery {
   contentTypeId?: string;
@@ -65,7 +67,11 @@ interface ContentUpdateData {
 
 @Injectable()
 export class ContentService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private queryOptimization: QueryOptimizationService,
+    private queryCache: QueryCacheService,
+  ) {}
 
   async create(createContentDto: CreateContentDto, userId: string) {
     const existingContent = await this.prisma.content.findFirst({
@@ -661,5 +667,71 @@ export class ContentService {
     });
 
     return { message: 'Content deleted successfully' };
+  }
+
+  // Optimized query methods for large datasets
+
+  /**
+   * Get optimized content list with select statements for better performance
+   */
+  async findAllOptimized(
+    organizationId: string,
+    query?: ContentQuery,
+    limit = 10,
+    offset = 0,
+  ) {
+    return this.queryOptimization.getOptimizedContentList(organizationId, {
+      limit,
+      offset,
+      status: query?.status,
+      contentTypeId: query?.contentTypeId,
+    });
+  }
+
+  /**
+   * Get cached content list for frequently accessed data
+   */
+  async findAllCached(
+    organizationId: string,
+    query?: ContentQuery,
+    limit = 10,
+    offset = 0,
+  ) {
+    return this.queryCache.getCachedContentList(organizationId, {
+      limit,
+      offset,
+      status: query?.status,
+      contentTypeId: query?.contentTypeId,
+    });
+  }
+
+  /**
+   * Get minimal content list for large datasets (only essential fields)
+   */
+  async findAllMinimal(
+    organizationId: string,
+    query?: ContentQuery,
+    limit = 20,
+    offset = 0,
+  ) {
+    return this.queryOptimization.getContentListMinimal(organizationId, {
+      limit,
+      offset,
+      status: query?.status,
+    });
+  }
+
+  /**
+   * Get content with optimized relations
+   */
+  async findOneWithRelations(id: string, organizationId: string) {
+    return this.queryOptimization.getContentWithRelations(organizationId, id);
+  }
+
+  /**
+   * Invalidate content cache after content operations
+   */
+  private invalidateContentCache(organizationId: string): void {
+    this.queryCache.invalidateContentCache(organizationId);
   }
 }

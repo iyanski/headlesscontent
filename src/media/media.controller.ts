@@ -53,8 +53,8 @@ export class MediaController {
   }
 
   @Get()
-  findAll(@Query() query: MediaQueryDto) {
-    return this.mediaService.findAll(query);
+  findAll(@Query() query: MediaQueryDto, @Request() req: RequestWithUser) {
+    return this.mediaService.findAll(req.user.organizationId, query);
   }
 
   @Get(':id')

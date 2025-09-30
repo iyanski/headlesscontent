@@ -76,12 +76,16 @@ export class MediaService {
     return media;
   }
 
-  async findAll(query?: { limit?: number; offset?: number }) {
+  async findAll(
+    organizationId: string,
+    query?: { limit?: number; offset?: number },
+  ) {
     const limit = query?.limit || 20;
     const offset = query?.offset || 0;
 
     const [media, total] = await Promise.all([
       this.prisma.media.findMany({
+        where: { organizationId },
         skip: offset,
         take: limit,
         orderBy: { createdAt: 'desc' },
@@ -104,7 +108,9 @@ export class MediaService {
           },
         },
       }),
-      this.prisma.media.count(),
+      this.prisma.media.count({
+        where: { organizationId },
+      }),
     ]);
 
     return {

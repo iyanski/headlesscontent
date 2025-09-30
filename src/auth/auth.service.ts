@@ -80,7 +80,7 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload);
 
     return {
-      access_token: accessToken,
+      accessToken,
       user: {
         id: user.id,
         email: user.email,

@@ -159,7 +159,7 @@ describe('AuthService', () => {
         organizationId: 'org-1',
       });
       expect(result).toEqual({
-        access_token: 'jwt-token',
+        accessToken: 'jwt-token',
         user: {
           id: 'user-1',
           email: 'test@example.com',

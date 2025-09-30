@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_PIPE, APP_GUARD } from '@nestjs/core';
+import { APP_PIPE, APP_GUARD, APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { PrismaModule } from './prisma/prisma.module';
@@ -13,6 +13,8 @@ import { CategoriesModule } from './categories/categories.module';
 import { TagsModule } from './tags/tags.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { PublicModule } from './public/public.module';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { ErrorResponseFilter } from './common/filters/error-response.filter';
 
 @Module({
   imports: [
@@ -55,6 +57,14 @@ import { PublicModule } from './public/public.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ErrorResponseFilter,
     },
   ],
 })

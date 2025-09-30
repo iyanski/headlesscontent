@@ -65,7 +65,7 @@ export class UpdateUserDto {
 
   @ApiPropertyOptional({
     enum: UserRole,
-    example: UserRole.VIEWER,
+    example: UserRole.EDITOR,
     description: 'Updated role of the user in the organization',
   })
   @IsOptional()

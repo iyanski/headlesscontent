@@ -17,6 +17,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { MediaService } from './media.service';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { MediaQueryDto } from './dto/media-query.dto';
@@ -38,6 +39,7 @@ export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
 
   @Post('upload')
+  @Throttle({ short: { limit: 20, ttl: 900000 } }) // 20 uploads per 15 minutes
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
     @UploadedFile(

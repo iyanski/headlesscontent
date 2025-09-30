@@ -10,6 +10,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -24,6 +25,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @Throttle({ short: { limit: 3, ttl: 3600000 } }) // 3 attempts per hour
   create(
     @Body() createUserDto: CreateUserDto,
     @Request() req: RequestWithUser,

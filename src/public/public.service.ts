@@ -22,7 +22,9 @@ export class PublicService {
       offset = 0,
       organizationSlug,
     } = query;
-
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     // Validate limit
     const validatedLimit = Math.min(Math.max(limit, 1), 100);
 
@@ -155,6 +157,9 @@ export class PublicService {
   }
 
   async findOne(id: string, organizationSlug: string) {
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     const organization = await this.prisma.organization.findUnique({
       where: { slug: organizationSlug },
       select: { id: true },
@@ -226,6 +231,9 @@ export class PublicService {
   }
 
   async findBySlug(slug: string, organizationSlug: string) {
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     const organization = await this.prisma.organization.findUnique({
       where: { slug: organizationSlug },
       select: { id: true },
@@ -297,6 +305,9 @@ export class PublicService {
   }
 
   async getCategories(organizationSlug: string) {
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     const organization = await this.prisma.organization.findUnique({
       where: { slug: organizationSlug },
       select: { id: true },
@@ -323,6 +334,9 @@ export class PublicService {
   }
 
   async getTags(organizationSlug: string) {
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     const organization = await this.prisma.organization.findUnique({
       where: { slug: organizationSlug },
       select: { id: true },
@@ -349,6 +363,9 @@ export class PublicService {
   }
 
   async getContentTypes(organizationSlug: string) {
+    if (!organizationSlug) {
+      throw new NotFoundException('Organization slug is required');
+    }
     const organization = await this.prisma.organization.findUnique({
       where: { slug: organizationSlug },
       select: { id: true },

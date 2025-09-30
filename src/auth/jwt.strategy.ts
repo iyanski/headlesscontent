@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import { UserRole } from '@prisma/client';
+import { JwtSecretValidator } from '../common/utils/jwt-secret-validator';
 
 interface JwtPayload {
   email: string;
@@ -18,10 +18,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private configService: ConfigService,
     private prisma: PrismaService,
+    private jwtSecretValidator: JwtSecretValidator,
   ) {
     const jwtSecret = configService.get<string>('JWT_SECRET');
     if (!jwtSecret) {
       throw new Error('JWT_SECRET is not defined');
+    }
+
+    // Validate JWT secret strength
+    const validation = jwtSecretValidator.validateJwtSecret(jwtSecret);
+    if (!validation.isValid) {
+      throw new Error(
+        `JWT_SECRET validation failed: ${validation.errors.join(', ')}`,
+      );
     }
 
     super({

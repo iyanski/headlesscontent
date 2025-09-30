@@ -9,6 +9,7 @@ import {
   MaxLength,
 } from 'class-validator';
 import { UserRole } from '@prisma/client';
+import { IsPasswordComplex } from '../../common/decorators/password-complexity.decorator';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -33,15 +34,20 @@ export class CreateUserDto {
   username: string;
 
   @ApiProperty({
-    example: 'password123',
-    description: 'Password for the user account',
+    example: 'SecurePass123!',
+    description:
+      'Password for the user account (must contain uppercase, lowercase, numbers, and special characters)',
     minLength: 8,
-    maxLength: 100,
+    maxLength: 128,
   })
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
-  @MaxLength(100)
+  @MaxLength(128)
+  @IsPasswordComplex({
+    message:
+      'Password must contain at least 8 characters with uppercase, lowercase, numbers, and special characters. It should not contain personal information or common patterns.',
+  })
   password: string;
 
   @ApiPropertyOptional({

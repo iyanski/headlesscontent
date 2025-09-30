@@ -13,19 +13,24 @@ export class StartupValidationService implements OnModuleInit {
 
   async onModuleInit() {
     this.logger.log('🔍 Starting application security validation...');
-    
+
     try {
       await this.validateJwtSecret();
-      this.logger.log('✅ Application security validation completed successfully');
+      this.logger.log(
+        '✅ Application security validation completed successfully',
+      );
     } catch (error) {
-      this.logger.error('❌ Application security validation failed:', error.message);
+      this.logger.error(
+        '❌ Application security validation failed:',
+        error.message,
+      );
       throw error;
     }
   }
 
   private async validateJwtSecret(): Promise<void> {
     const jwtSecret = this.configService.get<string>('JWT_SECRET');
-    
+
     if (!jwtSecret) {
       throw new Error('JWT_SECRET environment variable is not set');
     }

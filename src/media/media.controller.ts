@@ -10,7 +10,7 @@ import {
   Request,
   Query,
   UseInterceptors,
-  UploadedFile,
+  UploadedFile as UploadedFileDecorator,
   ParseFilePipe,
   MaxFileSizeValidator,
   FileTypeValidator,
@@ -19,17 +19,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
 import { MediaService } from './media.service';
+import type { UploadedFile } from './media.service';
 import { UpdateMediaDto } from './dto/update-media.dto';
 import { MediaQueryDto } from './dto/media-query.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import type { RequestWithUser } from '../common/types/request-with-user.interface';
-
-interface UploadedFile {
-  originalname: string;
-  buffer: Buffer;
-  mimetype: string;
-  size: number;
-}
 
 @ApiTags('Media')
 @ApiBearerAuth()
@@ -42,7 +36,7 @@ export class MediaController {
   @Throttle({ short: { limit: 20, ttl: 900000 } }) // 20 uploads per 15 minutes
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
-    @UploadedFile(
+    @UploadedFileDecorator(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 10 * 1024 * 1024 }), // 10MB

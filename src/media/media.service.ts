@@ -4,7 +4,7 @@ import { UpdateMediaDto } from './dto/update-media.dto';
 import * as fs from 'fs';
 import * as path from 'path';
 
-interface UploadedFile {
+export interface UploadedFile {
   originalname: string;
   buffer: Buffer;
   mimetype: string;

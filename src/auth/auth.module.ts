@@ -23,7 +23,12 @@ import { StartupValidationService } from '../common/services/startup-validation.
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtSecretValidator, StartupValidationService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    JwtSecretValidator,
+    StartupValidationService,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}
